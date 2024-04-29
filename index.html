@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cute Kitty</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+      #kitty {
+        width: 200px;
+        height: 200px;
+        background-image: url("./car1.png");
+        background-size: contain;
+        background-repeat: no-repeat;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="kitty"></div>
+    <!-- audio -->
+    <audio id="clickSound">
+      <source src="./cat-purr-meow-8327.mp3" type="audio/mpeg" />
+      Your browser does not support the audio element.
+    </audio>
+
+    <script>
+      const kittyDiv = document.getElementById("kitty");
+
+      function playClickSound() {
+        const clickSound = document.getElementById("clickSound");
+        clickSound.play();
+      }
+
+      let isLeftMouseDown = false;
+      let isRightMouseDown = false;
+
+      function handleMouseDown(event) {
+        if (event.button === 0) {
+          isLeftMouseDown = true;
+        } else if (event.button === 2) {
+          isRightMouseDown = true;
+        }
+        handleMouseAction();
+      }
+
+      function handleMouseUp(event) {
+        if (event.button === 0) {
+          isLeftMouseDown = false;
+        } else if (event.button === 2) {
+          isRightMouseDown = false;
+        }
+        handleMouseAction();
+      }
+
+      function handleMouseAction() {
+        if (isLeftMouseDown && !isRightMouseDown) {
+          console.log("Left paw clap!");
+          kittyDiv.style.backgroundImage = "url('./carleft1.png')";
+          playClickSound();
+        } else if (!isLeftMouseDown && isRightMouseDown) {
+          console.log("Right paw clap!");
+          kittyDiv.style.backgroundImage = "url('./carright1.png')";
+          playClickSound();
+        } else if (isLeftMouseDown && isRightMouseDown) {
+          console.log("Both paws clap!");
+          kittyDiv.style.backgroundImage = "url('./carboth1.png')";
+          playClickSound();
+        } else {
+          kittyDiv.style.backgroundImage = "url('./car1.png')";
+        }
+      }
+
+      kittyDiv.addEventListener("mousedown", handleMouseDown);
+      kittyDiv.addEventListener("mouseup", handleMouseUp);
+
+      kittyDiv.addEventListener("contextmenu", function (event) {
+        event.preventDefault();
+      });
+    </script>
+  </body>
+</html>
